@@ -2,7 +2,7 @@
 
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Model: SD 1.5](https://img.shields.io/badge/model-SD%201.5-orange.svg)](https://huggingface.co/runwayml/stable-diffusion-v1-5)
+[![Model: SD 1.5](https://img.shields.io/badge/model-SD%201.5-orange.svg)](https://huggingface.co/stable-diffusion-v1-5/stable-diffusion-v1-5)
 
 **Heun-DDIM** applies a predictor-corrector correction to DDIM inversion,
 reducing round-trip reconstruction error with no changes to the model weights.
