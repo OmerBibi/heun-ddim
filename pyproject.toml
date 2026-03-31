@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "heun-ddim"
+version = "0.1.0"
+description = "Heun-corrected DDIM inversion for Stable Diffusion 1.5"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "torch>=2.0",
+    "torchvision",
+    "diffusers>=0.21",
+    "transformers>=4.35",
+    "accelerate",
+    "safetensors",
+    "numpy",
+    "pillow",
+    "scikit-image",
+    "torchmetrics[image]",
+    "pandas",
+    "matplotlib",
+    "tqdm",
+]
+
+[project.scripts]
+heun-invert = "heun_ddim.engine:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

@@ -1,0 +1,20 @@
+# Behind-the-scenes benchmark infrastructure — not part of the public repo
+scripts/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# Outputs
+demo_output/
+runs/
+latents/
+*.npz
+
+# OS
+.DS_Store

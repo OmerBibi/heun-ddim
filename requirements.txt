@@ -1,0 +1,17 @@
+torch>=2.0
+torchvision
+torchaudio
+diffusers>=0.21
+transformers>=4.35
+accelerate
+safetensors
+numpy
+pillow
+scikit-image
+torchmetrics[image]
+pandas
+matplotlib
+tqdm
+sentencepiece
+protobuf
+requests
