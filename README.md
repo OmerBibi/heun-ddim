@@ -69,8 +69,8 @@ Two prompt conditions are reported separately.
 
 Δ PSNR = **+3.04 dB**  ·  Δ SSIM = **+0.085**  ·  FID reduction = **77 %**
 
-<p align="center"><img src="assets/plots/metrics_table_no_text.png"/></p>
-<p align="center"><em>Metrics — No Text Prompt</em></p>
+<!-- <p align="center"><img src="assets/plots/metrics_table_no_text.png"/></p>
+<p align="center"><em>Metrics — No Text Prompt</em></p> -->
 
 <p align="center"><img src="assets/plots/metrics_histograms_no_text.png"/></p>
 <p align="center"><em>Per-image distributions — No Text Prompt</em></p>
@@ -86,8 +86,8 @@ Two prompt conditions are reported separately.
 
 Δ PSNR = **+2.75 dB**  ·  Δ SSIM = **+0.075**  ·  FID reduction = **71 %**
 
-<p align="center"><img src="assets/plots/metrics_table_with_text.png"/></p>
-<p align="center"><em>Metrics — Category-Label Prompt</em></p>
+<!-- <p align="center"><img src="assets/plots/metrics_table_with_text.png"/></p>
+<p align="center"><em>Metrics — Category-Label Prompt</em></p> -->
 
 <p align="center"><img src="assets/plots/metrics_histograms_with_text.png"/></p>
 <p align="center"><em>Per-image distributions — Category-Label Prompt</em></p>
