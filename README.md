@@ -14,9 +14,8 @@ Evaluated on **4,000 COCO images** at 50 steps, it raises mean PSNR from
 
 ## Teaser
 
-![Comparison example](assets/comparisons/example_01.png)
-
-*Left: original image.  Center: DDIM reconstruction.  Right: Heun-DDIM reconstruction.*
+<p align="center"><img src="assets/comparisons/example_01.png"/></p>
+<p align="center"><em>Left: original image.  Center: DDIM reconstruction.  Right: Heun-DDIM reconstruction.</em></p>
 
 ---
 
@@ -70,9 +69,11 @@ Two prompt conditions are reported separately.
 
 Δ PSNR = **+3.04 dB**  ·  Δ SSIM = **+0.085**  ·  FID reduction = **77 %**
 
-![No-text metrics table](assets/plots/metrics_table_no_text.png)
+<p align="center"><img src="assets/plots/metrics_table_no_text.png"/></p>
+<p align="center"><em>Metrics — No Text Prompt</em></p>
 
-![No-text histograms](assets/plots/metrics_histograms_no_text.png)
+<p align="center"><img src="assets/plots/metrics_histograms_no_text.png"/></p>
+<p align="center"><em>Per-image distributions — No Text Prompt</em></p>
 
 ---
 
@@ -85,12 +86,26 @@ Two prompt conditions are reported separately.
 
 Δ PSNR = **+2.75 dB**  ·  Δ SSIM = **+0.075**  ·  FID reduction = **71 %**
 
-![With-text metrics table](assets/plots/metrics_table_with_text.png)
+<p align="center"><img src="assets/plots/metrics_table_with_text.png"/></p>
+<p align="center"><em>Metrics — Category-Label Prompt</em></p>
 
-![With-text histograms](assets/plots/metrics_histograms_with_text.png)
+<p align="center"><img src="assets/plots/metrics_histograms_with_text.png"/></p>
+<p align="center"><em>Per-image distributions — Category-Label Prompt</em></p>
 
 > Text prompts from COCO labels give DDIM a small boost (22.10 → 22.40 dB), but
 > Heun-DDIM's advantage is consistent across both conditions.
+
+### Visual comparisons
+
+Top-6 images by Heun-DDIM PSNR improvement over DDIM.
+
+<p align="center"><img src="assets/comparisons/example_01.png"/></p>
+<p align="center"><img src="assets/comparisons/example_02.png"/></p>
+<p align="center"><img src="assets/comparisons/example_03.png"/></p>
+<p align="center"><img src="assets/comparisons/example_04.png"/></p>
+<p align="center"><img src="assets/comparisons/example_05.png"/></p>
+<p align="center"><img src="assets/comparisons/example_06.png"/></p>
+<p align="center"><em>Left: original.  Center: DDIM.  Right: Heun-DDIM.</em></p>
 
 ---
 
@@ -218,8 +233,8 @@ python reconstruct.py \
 ```bibtex
 @misc{heun-ddim-2025,
   title  = {Heun-DDIM: Second-Order Corrected DDIM Inversion for Stable Diffusion},
-  author = {TODO},
+  author = {Bibi, Omer and Adar, Yotam},
   year   = {2025},
-  url    = {https://github.com/<your-username>/heun-ddim},
+  url    = {https://github.com/OmerBibi/heun-ddim},
 }
 ```
