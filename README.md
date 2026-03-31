@@ -231,10 +231,10 @@ python reconstruct.py \
 ## Citation
 
 ```bibtex
-@misc{heun-ddim-2025,
+@misc{heun-ddim-2026,
   title  = {Heun-DDIM: Second-Order Corrected DDIM Inversion for Stable Diffusion},
   author = {Bibi, Omer and Adar, Yotam},
-  year   = {2025},
+  year   = {2026},
   url    = {https://github.com/OmerBibi/heun-ddim},
 }
 ```
