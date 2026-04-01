@@ -31,7 +31,7 @@ class MetricCalculator:
         self.clip_processor = CLIPProcessor.from_pretrained(CLIP_ID)
         if fid_keys is None:
             fid_keys = ["ddim", "heun"]
-        self.fid_by_method = {key: FrechetInceptionDistance(feature=64).to(device) for key in fid_keys}
+        self.fid_by_method = {key: FrechetInceptionDistance(feature=2048).to(device) for key in fid_keys}
 
     def compute_clip_similarity(self, img_a: np.ndarray, img_b: np.ndarray) -> float:
         inputs = self.clip_processor(images=[img_a, img_b], return_tensors="pt", padding=True).to(self.device)
