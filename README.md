@@ -7,8 +7,9 @@
 **Heun-DDIM** applies a predictor-corrector correction to DDIM inversion,
 reducing round-trip reconstruction error with no changes to the model weights.
 Evaluated on **4,000 COCO images** at 50 steps, it raises mean PSNR from
-**22.1 → 25.1 dB**, CLIP similarity from **0.865 → 0.974**, and FID from
-**18.0 → 4.1** under a fixed prompt.
+**22.1 → 25.1 dB**, lowers LPIPS from **0.223 → 0.081**, raises CLIP
+similarity from **0.865 → 0.974**, and lowers FID from **18.0 → 4.1**
+under a fixed prompt.
 
 ---
 
@@ -57,17 +58,18 @@ per step.  The same correction is applied symmetrically during reconstruction.
 ## Results
 
 All experiments use Stable Diffusion 1.5, 512×512, 50 DDIM steps, 4,000 COCO 2017
-images.  FID is computed with InceptionV3 pool_3 features (feature=2048).
+images.  LPIPS is computed with AlexNet, and FID is recomputed separately with
+InceptionV3 pool_3 features (feature=2048) using `scripts/recompute_fid.py`.
 Two prompt conditions are reported separately.
 
 ### Without-text inversion  (`"a photo"` prompt)
 
-| Method    |   N   |  MSE ↓  | PSNR ↑ | SSIM ↑ | CLIP ↑ | FID ↓ | Total (s) |
-|-----------|------:|--------:|-------:|-------:|-------:|------:|----------:|
-| DDIM      | 4 000 | 530.77  | 22.10  | 0.6385 | 0.8648 | 18.04 | 3.03      |
-| Heun-DDIM | 4 000 | **303.26** | **25.14** | **0.7230** | **0.9735** | **4.12** | 5.94 |
+| Method    |   N   |  MSE ↓  | PSNR ↑ | SSIM ↑ | CLIP ↑ | LPIPS ↓ | FID ↓ | Total (s) |
+|-----------|------:|--------:|-------:|-------:|-------:|--------:|------:|----------:|
+| DDIM      | 4 000 | 530.77  | 22.10  | 0.6385 | 0.8648 | 0.2234  | 18.04 | 3.03      |
+| Heun-DDIM | 4 000 | **303.26** | **25.14** | **0.7230** | **0.9735** | **0.0805** | **4.12** | 5.94 |
 
-Δ PSNR = **+3.04 dB**  ·  Δ SSIM = **+0.085**  ·  FID reduction = **77 %**
+Δ PSNR = **+3.04 dB**  ·  Δ SSIM = **+0.085**  ·  LPIPS reduction = **64 %**  ·  FID reduction = **77 %**
 
 <!-- <p align="center"><img src="assets/plots/metrics_table_no_text.png"/></p>
 <p align="center"><em>Metrics — No Text Prompt</em></p> -->
@@ -79,12 +81,12 @@ Two prompt conditions are reported separately.
 
 ### With-text inversion  (COCO category-label prompt)
 
-| Method    |   N   |  MSE ↓  | PSNR ↑ | SSIM ↑ | CLIP ↑ | FID ↓ | Total (s) |
-|-----------|------:|--------:|-------:|-------:|-------:|------:|----------:|
-| DDIM      | 4 000 | 502.49  | 22.40  | 0.6481 | 0.8969 | 13.76 | 3.03      |
-| Heun-DDIM | 4 000 | **302.45** | **25.15** | **0.7233** | **0.9749** | **4.00** | 5.95 |
+| Method    |   N   |  MSE ↓  | PSNR ↑ | SSIM ↑ | CLIP ↑ | LPIPS ↓ | FID ↓ | Total (s) |
+|-----------|------:|--------:|-------:|-------:|-------:|--------:|------:|----------:|
+| DDIM      | 4 000 | 502.49  | 22.40  | 0.6481 | 0.8969 | 0.2071  | 13.76 | 3.03      |
+| Heun-DDIM | 4 000 | **302.45** | **25.15** | **0.7233** | **0.9749** | **0.0802** | **4.00** | 5.95 |
 
-Δ PSNR = **+2.75 dB**  ·  Δ SSIM = **+0.075**  ·  FID reduction = **71 %**
+Δ PSNR = **+2.75 dB**  ·  Δ SSIM = **+0.075**  ·  LPIPS reduction = **61 %**  ·  FID reduction = **71 %**
 
 <!-- <p align="center"><img src="assets/plots/metrics_table_with_text.png"/></p>
 <p align="center"><em>Metrics — Category-Label Prompt</em></p> -->
