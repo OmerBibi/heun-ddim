@@ -9,6 +9,7 @@ import json
 from pathlib import Path
 from typing import Dict, List
 
+import lpips
 import numpy as np
 import pandas as pd
 import torch
@@ -29,6 +30,8 @@ class MetricCalculator:
         self.device = device
         self.clip_model = CLIPModel.from_pretrained(CLIP_ID).to(device)
         self.clip_processor = CLIPProcessor.from_pretrained(CLIP_ID)
+        self.lpips_model = lpips.LPIPS(net="alex").to(device)
+        self.lpips_model.eval()
         if fid_keys is None:
             fid_keys = ["ddim", "heun"]
         self.fid_by_method = {key: FrechetInceptionDistance(feature=2048).to(device) for key in fid_keys}
@@ -42,11 +45,20 @@ class MetricCalculator:
         return float(similarity.item())
 
     def compute_pair_metrics(self, original: np.ndarray, reconstructed: np.ndarray) -> Dict[str, float]:
+        original_tensor = (
+            torch.from_numpy(original).permute(2, 0, 1).unsqueeze(0).to(self.device, dtype=torch.float32) / 255.0
+        )
+        reconstructed_tensor = (
+            torch.from_numpy(reconstructed).permute(2, 0, 1).unsqueeze(0).to(self.device, dtype=torch.float32) / 255.0
+        )
+        with torch.no_grad():
+            lpips_value = self.lpips_model(original_tensor, reconstructed_tensor, normalize=True)
         return {
             "mse": float(mean_squared_error(original, reconstructed)),
             "psnr": float(psnr(original, reconstructed, data_range=255)),
             "ssim": float(ssim(original, reconstructed, data_range=255, channel_axis=2, win_size=7)),
             "clip_similarity": self.compute_clip_similarity(original, reconstructed),
+            "lpips": float(lpips_value.item()),
         }
 
     def update_fid(self, method: str, original: np.ndarray, reconstructed: np.ndarray) -> None:
@@ -81,6 +93,7 @@ def write_summary(results_df: pd.DataFrame, fid_scores: Dict[str, float], out_di
             "mean_psnr": float(method_df["psnr"].mean()),
             "mean_ssim": float(method_df["ssim"].mean()),
             "mean_clip_similarity": float(method_df["clip_similarity"].mean()),
+            "mean_lpips": float(method_df["lpips"].mean()),
             "mean_inversion_seconds": float(method_df["inversion_seconds"].mean()),
             "mean_reconstruction_seconds": float(method_df["reconstruction_seconds"].mean()),
             "mean_total_seconds": float(method_df["total_seconds"].mean()),

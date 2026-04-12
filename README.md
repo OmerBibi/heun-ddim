@@ -6,10 +6,10 @@
 
 **Heun-DDIM** applies a predictor-corrector correction to DDIM inversion,
 reducing round-trip reconstruction error with no changes to the model weights.
-Evaluated on **4,000 COCO images** at 50 steps, it raises mean PSNR from
-**22.1 → 25.1 dB**, lowers LPIPS from **0.223 → 0.081**, raises CLIP
-similarity from **0.865 → 0.974**, and lowers FID from **18.0 → 4.1**
-under a fixed prompt.
+Evaluated on **5,000 COCO images** at 50 steps, it raises mean PSNR from
+**22.1 → 25.1 dB**, lowers LPIPS from **0.224 → 0.081**, raises CLIP
+similarity from **0.861 → 0.974**, and lowers FID from **15.6 → 3.4**
+under true no-text conditioning.
 
 ---
 
@@ -57,19 +57,19 @@ per step.  The same correction is applied symmetrically during reconstruction.
 
 ## Results
 
-All experiments use Stable Diffusion 1.5, 512×512, 50 DDIM steps, 4,000 COCO 2017
+All experiments use Stable Diffusion 1.5, 512×512, 50 DDIM steps, 5,000 COCO 2017
 images.  LPIPS is computed with AlexNet, and FID is recomputed separately with
 InceptionV3 pool_3 features (feature=2048) using `scripts/recompute_fid.py`.
-Two prompt conditions are reported separately.
+Three prompt conditions are reported separately.
 
-### Without-text inversion  (`"a photo"` prompt)
+### No-text inversion  (empty prompt)
 
 | Method    |   N   |  MSE ↓  | PSNR ↑ | SSIM ↑ | CLIP ↑ | LPIPS ↓ | FID ↓ | Total (s) |
 |-----------|------:|--------:|-------:|-------:|-------:|--------:|------:|----------:|
-| DDIM      | 4 000 | 530.77  | 22.10  | 0.6385 | 0.8648 | 0.2234  | 18.04 | 3.03      |
-| Heun-DDIM | 4 000 | **303.26** | **25.14** | **0.7230** | **0.9735** | **0.0805** | **4.12** | 5.94 |
+| DDIM      | 5 000 | 536.81  | 22.11  | 0.6364 | 0.8614 | 0.2243  | 15.59 | 2.99      |
+| Heun-DDIM | 5 000 | **311.58** | **25.10** | **0.7201** | **0.9737** | **0.0814** | **3.37** | 5.86 |
 
-Δ PSNR = **+3.04 dB**  ·  Δ SSIM = **+0.085**  ·  LPIPS reduction = **64 %**  ·  FID reduction = **77 %**
+Δ PSNR = **+3.00 dB**  ·  Δ SSIM = **+0.084**  ·  LPIPS reduction = **64 %**  ·  FID reduction = **78 %**
 
 <!-- <p align="center"><img src="assets/plots/metrics_table_no_text.png"/></p>
 <p align="center"><em>Metrics — No Text Prompt</em></p> -->
@@ -79,14 +79,31 @@ Two prompt conditions are reported separately.
 
 ---
 
+### Fixed-prompt inversion  (`"a photo"` prompt)
+
+| Method    |   N   |  MSE ↓  | PSNR ↑ | SSIM ↑ | CLIP ↑ | LPIPS ↓ | FID ↓ | Total (s) |
+|-----------|------:|--------:|-------:|-------:|-------:|--------:|------:|----------:|
+| DDIM      | 5 000 | 532.43  | 22.11  | 0.6367 | 0.8655 | 0.2235  | 15.79 | 2.99      |
+| Heun-DDIM | 5 000 | **311.13** | **25.10** | **0.7202** | **0.9739** | **0.0812** | **3.37** | 5.86 |
+
+Δ PSNR = **+2.99 dB**  ·  Δ SSIM = **+0.084**  ·  LPIPS reduction = **64 %**  ·  FID reduction = **79 %**
+
+<!-- <p align="center"><img src="assets/plots/metrics_table_fixed.png"/></p>
+<p align="center"><em>Metrics — Fixed Prompt</em></p> -->
+
+<p align="center"><img src="assets/plots/metrics_histograms_fixed.png"/></p>
+<p align="center"><em>Per-image distributions — Fixed Prompt</em></p>
+
+---
+
 ### With-text inversion  (COCO category-label prompt)
 
 | Method    |   N   |  MSE ↓  | PSNR ↑ | SSIM ↑ | CLIP ↑ | LPIPS ↓ | FID ↓ | Total (s) |
 |-----------|------:|--------:|-------:|-------:|-------:|--------:|------:|----------:|
-| DDIM      | 4 000 | 502.49  | 22.40  | 0.6481 | 0.8969 | 0.2071  | 13.76 | 3.03      |
-| Heun-DDIM | 4 000 | **302.45** | **25.15** | **0.7233** | **0.9749** | **0.0802** | **4.00** | 5.95 |
+| DDIM      | 5 000 | 507.16  | 22.39  | 0.6457 | 0.8964 | 0.2092  | 11.69 | 2.99      |
+| Heun-DDIM | 5 000 | **311.18** | **25.13** | **0.7204** | **0.9751** | **0.0808** | **3.27** | 5.87 |
 
-Δ PSNR = **+2.75 dB**  ·  Δ SSIM = **+0.075**  ·  LPIPS reduction = **61 %**  ·  FID reduction = **71 %**
+Δ PSNR = **+2.74 dB**  ·  Δ SSIM = **+0.075**  ·  LPIPS reduction = **61 %**  ·  FID reduction = **72 %**
 
 <!-- <p align="center"><img src="assets/plots/metrics_table_with_text.png"/></p>
 <p align="center"><em>Metrics — Category-Label Prompt</em></p> -->
@@ -94,12 +111,13 @@ Two prompt conditions are reported separately.
 <p align="center"><img src="assets/plots/metrics_histograms_with_text.png"/></p>
 <p align="center"><em>Per-image distributions — Category-Label Prompt</em></p>
 
-> Text prompts from COCO labels give DDIM a small boost (22.10 → 22.40 dB), but
-> Heun-DDIM's advantage is consistent across both conditions.
+> Category-label prompts give DDIM a small boost over no-text conditioning
+> (22.11 → 22.39 dB), but
+> Heun-DDIM's advantage is consistent across all three conditions.
 
 ### Visual comparisons
 
-Top-6 images by Heun-DDIM PSNR improvement over DDIM.
+Top-6 no-text images by Heun-DDIM PSNR improvement over DDIM.
 
 <p align="center"><img src="assets/comparisons/example_01.png"/></p>
 <p align="center"><img src="assets/comparisons/example_02.png"/></p>
@@ -226,6 +244,18 @@ python reconstruct.py \
     --latent-heun  latents/photo_heun.npz \
     --original     photo.jpg \
     --output       comparison.png
+```
+
+For benchmark runs, `scripts/run_benchmark.py` now also supports a true
+empty-conditioning mode:
+
+```bash
+python scripts/run_benchmark.py \
+    --manifest /path/to/manifest.csv \
+    --output-root runs/coco_4k_no_text \
+    --prompt-source no_text \
+    --num-steps 50 \
+    --image-size 512
 ```
 
 ---

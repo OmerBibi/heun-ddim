@@ -9,6 +9,7 @@ numpy
 pillow
 scikit-image
 torchmetrics[image]
+lpips
 pandas
 matplotlib
 tqdm
