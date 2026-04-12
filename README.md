@@ -117,13 +117,14 @@ Three prompt conditions are reported separately.
 
 ### Visual comparisons
 
-Top-6 no-text images by Heun-DDIM PSNR improvement over DDIM.
+Some no-text images by Heun-DDIM PSNR improvement over DDIM.
+See `assets/comparisons/` for more no-text comparison examples.
 
-<p align="center"><img src="assets/comparisons/example_01.png"/></p>
+<p align="center"><img src="assets/comparisons/example_17.png"/></p>
 <p align="center"><img src="assets/comparisons/example_02.png"/></p>
 <p align="center"><img src="assets/comparisons/example_03.png"/></p>
-<p align="center"><img src="assets/comparisons/example_04.png"/></p>
-<p align="center"><img src="assets/comparisons/example_05.png"/></p>
+<p align="center"><img src="assets/comparisons/example_10.png"/></p>
+<p align="center"><img src="assets/comparisons/example_20.png"/></p>
 <p align="center"><img src="assets/comparisons/example_06.png"/></p>
 <p align="center"><em>Left: original.  Center: DDIM.  Right: Heun-DDIM.</em></p>
 
