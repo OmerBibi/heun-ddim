@@ -15,7 +15,7 @@ under true no-text conditioning.
 
 ## Teaser
 
-<p align="center"><img src="assets/comparisons/example_01.png"/></p>
+<p align="center"><img src="assets/comparisons/example_04.png"/></p>
 <p align="center"><em>Left: original image.  Center: DDIM reconstruction.  Right: Heun-DDIM reconstruction.</em></p>
 
 ---
